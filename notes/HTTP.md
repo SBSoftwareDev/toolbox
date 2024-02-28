@@ -1,4 +1,4 @@
-# Notes on (Basic) HTTP
+# Basic HTTP
 
 **Network Request** - Communicates information between computers (e.g. client/server)
 - Typically uses HTTP/HTTPS protocols
