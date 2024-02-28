@@ -48,11 +48,13 @@
 **HTTP Headers** - Field of the HTTP Request/Response that provides additional context/metadata
                 (e.g. Describing content type, authorization tokens, HTTP method)
 
-EXAMPLE:
-        [Landing on login page]
+EXAMPLE: 
+
+    [Landing on login page]
     GET https://www.instagram.com/login
     Response: Status 200 Contents HTML
-        [Performing login request]
+
+    [Performing login request]
     POST https://www.instagram.com/login Contents User
     Response Status 300 Contents Redirection User
 
