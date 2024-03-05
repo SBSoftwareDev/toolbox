@@ -72,7 +72,7 @@ Doubling up on the curly braces is necessary because the style attribute is look
 Inline styling is useful for React elements that should be dynamically updated.
 
 ## React Components
-A React component can be created through a function that returns JSX parsable html. This component can then be inserted with html element syntax.
+A basic React component can be created through a function that returns JSX parsable html. This component can then be inserted with html element syntax.
 ```
 function Heading() {
     return <h1>My favorite books</h1>;
@@ -100,3 +100,40 @@ import Heading from "./Heading";
 
 ReactDOM.render(<Heading />, document.getElementById("root"));
 ```
+
+### Props
+Shorthand for properties.  
+Props are the properties of components that can be used like normal JS arguments.  
+You can think of React components almost like 'Custom HTML elements'. You are able to add custom attributes to these, unlike classic HTML elements.  
+Here is an example:
+```
+function Contact(props) {
+    return 
+        <div>
+            <p>{ props.name }</p>
+            <p>{ props.phone }</p>
+            <p>{ props.email }</p>
+        </div>;
+}   
+
+ReactDOM.render(
+    <div>
+        <Contact
+            name="John Smith"
+            phone="123 456 7890"
+            email="johnsmith@email.com"
+        /> 
+        <Contact
+            name="Jane Smith"
+            phone="123 456 7891"
+            email="janesmith@email.com"
+        /> 
+    </div>,
+    ...);
+```
+- **NOTE:** HTML native attributes are *not* recognized when passed inside react components (e.g. className or color)
+
+## React Developer Tools
+A chromium (and Firefox) based extension that allows a user to view React component heirarchies in the developer tools pane.
+
+This extension is a valuable tool when debugging with React.
