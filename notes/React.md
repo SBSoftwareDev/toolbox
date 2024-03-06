@@ -22,8 +22,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 ```
 
-
-## Rendering Elements
+## React Basics
+### Rendering Elements
 Start displaying elements with the render function of ```ReactDOM```.
 ```
 ReactDOM.render(WHAT TO SHOW, WHERE TO SHOW IT)
@@ -71,7 +71,7 @@ Doubling up on the curly braces is necessary because the style attribute is look
 #### Why use inline styling instead of a CSS stylesheet?
 Inline styling is useful for React elements that should be dynamically updated.
 
-## React Components
+### React Components
 A basic React component can be created through a function that returns JSX parsable html. This component can then be inserted with html element syntax.
 ```
 function Heading() {
@@ -80,7 +80,8 @@ function Heading() {
 
 ReactDOM.render(<Heading />, ...);
 ```
-Common practice is separate components into individual ```.jsx``` files.   
+- **NOTE:** Common practice is separate major components into individual ```.jsx``` files.    
+
 For example, separating the above code yields:  
 ```Heading.jsx```
 ```
@@ -131,7 +132,44 @@ ReactDOM.render(
     </div>,
     ...);
 ```
-- **NOTE:** HTML native attributes are *not* recognized when passed inside react components (e.g. className or color)
+- **NOTE:** HTML native attributes are *not* recognized when passed inside react components (e.g. **className** or **color**)
+
+## Developing with React
+
+Over the course of developing with React, there are some common features and quirks you should be aware of. 
+
+### Mapping Data to Components
+When using any sort of loop to map data to a stream of React components, you will need to a provide a *key* inside the looped component(s) to uniquely identify each one. Failure to do so will throw an error. It should be noted that the *key* value is not restricted to integers.
+
+For Example:  
+```app.jsx```
+```
+...
+function createContact(contact) {
+    return (
+        <Contact>
+            key={ contact.id }
+            name={ contact.name }
+            phone={ contact.phone }
+            email={ contact.email }
+    );
+}
+
+function App() {
+    return (
+        <div>
+        <h1>Contacts</h1>
+
+        {contacts.map(createCard)}
+
+        </div>
+    );
+}
+```
+
+The *key* property is **not** accessible as a prop. Attempting to do so will result in *undefined*. 
+
+
 
 ## React Developer Tools
 A chromium (and Firefox) based extension that allows a user to view React component heirarchies in the developer tools pane.
