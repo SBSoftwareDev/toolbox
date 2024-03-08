@@ -25,5 +25,25 @@ const squaredNumbers = numbers.map((x) => {
 // FILTER
 
 const namesWithA = names.filter((name) => {
-    return name.inde
+    name.toLowerCase().includes('a');
+});
+
+
+// REDUCE
+
+const sumNumbers = numbers.reduce((prev, current) => {
+    return prev + current;
+});
+
+
+// FIND 
+
+const nameWithX = names.find((name) => {
+    return name.toLowerCase().includes('x');
+});
+
+// FIND INDEX
+
+const nameIndexWithX = names.findIndex((name) => {
+    return name.toLowerCase().includes('x');
 });
