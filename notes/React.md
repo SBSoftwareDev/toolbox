@@ -147,11 +147,12 @@ For Example:
 ...
 function createContact(contact) {
     return (
-        <Contact>
+        <Contact
             key={ contact.id }
             name={ contact.name }
             phone={ contact.phone }
             email={ contact.email }
+        />
     );
 }
 
@@ -160,7 +161,7 @@ function App() {
         <div>
         <h1>Contacts</h1>
 
-        {contacts.map(createCard)}
+        {contacts.map(createContact)}
 
         </div>
     );
