@@ -2,6 +2,22 @@
 React is a frontend framework for Javascript. React performs almost like a tree, working with components.
 React works well with dynamic content loading. React loads new frontend content by *comparing changes* in the webpage, almost like tracking with Git.
 
+### Table of Contents
+1. [Getting Started](#getting-started)  
+
+2. [React Basics](#react-basics)
+    1. [Rendering Elements](#rendering-elements)
+    2. [JSX Attributes](#jsx-attributes)
+    3. [JSX Inline Styling](#jsx-inline-styling)
+    4. [React Components](#react-components)
+    5. [Props](#props)
+
+3. [Developing With React](#developing-with-react)
+    1. [Rendering Elements Conditionally](#rendering-elements-conditionally)
+    2. [&& Operator](#operator)
+    3. [Loops](#loops)
+    4. [Mapping Data to Components](#mapping-data-to-components)
+
 ## Getting Started
 ### Setting up index.html
 In ```index.html```, add a div with an id of 'root'. This is the root of the react application, where react stuff goes.
@@ -162,13 +178,13 @@ function App() {
     </div>
 }
 ```
-You can see that *calling* the function results in a determinate value, and therefore is an expression. The issue with if "***statements***" is the parsing capabilities of JSX.
+You can see that *calling* the function ```conditionalRender()``` results in a determinate value, and therefore is an expression. The issue with if "***statements***" is the parsing capabilities of JSX.
 
 A more concise method to integrate the if statement utilizes the conditional ternary operator.
 ```
 CONDITION_STATEMENT ? TRUE_STATEMENT : FALSE_STATEMENT
 ```
-Under the hood, this achieves the same thing. One of the primary differences is that each part of the conditional ternary operator is an individual statement, making it valid for JSX. This allows to slip that line code *into* a component.  
+Under the hood, this achieves the same thing. One of the primary differences is that each part of the conditional ternary operator is an individual statement, making it valid for JSX. This allows us to slip that line of code *inside* a component.  
 
 Here we can see it in action:
 ```
@@ -190,7 +206,7 @@ const time = new Date().getHours();
 function App() {
   return (
     <div>
-      { time > 12 && <h1>Aren't you hungry?</h1>}
+      { time > 12 && <h1>Aren't you hungry?</h1> }
     </div>
   );
 }
@@ -205,7 +221,7 @@ Use of the ```Map()```, ```Filter()```, and ```Reduce()``` functions (with notab
 > *See examples of these functions in my* [*Array snippet*](https://github.com/SBSoftwareDev/toolbox/blob/main/snippets/Arrays.js)
 
 ### Mapping Data to Components
-When using any sort of loop to map data to a stream of React components, you will need to a provide a *key* inside the looped component(s) to uniquely identify each one. Failure to do so will throw an error. It should be noted that the *key* value is not restricted to integers.
+When using any sort of loop to map data to a stream of React components, passing the data through as **props**, you will need to a provide a *key* inside the looped component(s) to uniquely identify each one. Failure to do so will throw an error. It should be noted that the *key* value is not restricted to integers.
 
 For Example:  
 ```app.jsx```
@@ -236,7 +252,11 @@ function App() {
 
 The *key* property is **not** accessible as a prop. Attempting to do so will result in *undefined*. 
 
-## React Developer Tools
-A chromium (and Firefox) based extension that allows a user to view React component heirarchies in the developer tools pane, and utilize a profiling tool.
+### React Developer Tools
+A chromium (and Firefox) based extension by the same name that allows a user to view React component heirarchies in the developer tools pane, and utilize a profiling tool.
 
 This extension is a valuable tool when debugging with React.
+
+Thanks for reading, and good luck out there!
+---
+> See any issues? [Let me know!](https://www.DeveloperSean.com)
