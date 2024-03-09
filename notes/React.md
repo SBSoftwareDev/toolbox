@@ -14,9 +14,12 @@ React works well with dynamic content loading. React loads new frontend content 
 
 3. [Developing With React](#developing-with-react)
     1. [Rendering Elements Conditionally](#rendering-elements-conditionally)
-    2. [&& Operator](#operator)
-    3. [Loops](#loops)
-    4. [Mapping Data to Components](#mapping-data-to-components)
+        1. [If Statments](#if-statements)
+        2. [&& Operator](#operator)
+        3. [Loops](#loops)
+    2. [Mapping Data to Components](#mapping-data-to-components)
+    3. [State](#state)
+    4. [Hooks](#hooks)
 
 ## Getting Started
 ### Setting up index.html
@@ -251,6 +254,50 @@ function App() {
 ```
 
 The *key* property is **not** accessible as a prop. Attempting to do so will result in *undefined*. 
+
+### State
+Higher levels of interactivity with React require understanding of State. State can be likened to a component's memory. Changing the State of a component changes its UI style or function. 
+
+Using a state variable to control UI elements has some caveats in normal JavaScript. The changes don't typically happen immediately. The server would have to *re-render* the elements. Of course, you could directly access the DOM and modify the elements directly, however issues quickly arise when several elements depend multiple conditions.
+
+React offers a way to manage the State of components using **Hooks**. Hooks are special React functions that 'hook' into many features, including **State**, which is particularly useful. 
+
+### Hooks
+All of the **Hook** functions offered by React start with the word 'use'. ```useState()``` is one of the more useful hooks offered. **Hooks** can only be used while React is *rendering*.
+
+#### useState()
+This function accomplishes two important tasks that need to happen. 
+1. It provides a variable to **persist** data between renders
+2. It provides a setter function that **updates** the variable and triggers a **re-render**.
+
+To get started, you can call this function from React using ```React.useState()``` or import that function explicitly.
+```
+import { useState } from "react";
+```
+
+```useState()``` will **always** return an array with two items. The first one being the variable that holds data between renders; the variable that gets updated in the component. The second is the setter function that initializes the update and re-render. We are able to confidently use **array destructuring** to handle the objects from ```useState()```. 
+
+> *Here is an example of a simple counter on a webpage, with a button to increment it by one.*
+
+```
+import React, { useState } from 'react';
+
+function App() {
+    const [count, setCount] = useState(0);
+
+    function increase() {
+        setCount(count + 1);
+    }
+
+    return (
+        <div>
+            <h1>{count}</h1>
+            <button onClick={ increase }>+</button>
+        </div>
+    );
+}
+```
+
 
 ### React Developer Tools
 A chromium (and Firefox) based extension by the same name that allows a user to view React component heirarchies in the developer tools pane, and utilize a profiling tool.
