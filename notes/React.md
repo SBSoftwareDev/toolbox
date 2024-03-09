@@ -275,6 +275,12 @@ To get started, you can call this function from React using ```React.useState()`
 import { useState } from "react";
 ```
 
+This function essentially tells React that a component should remember something. The conventions for this function are as follows:
+
+```
+const [something, setSomething] = useState(initial_value)
+```
+
 ```useState()``` will **always** return an array with two items. The first one being the variable that holds data between renders; the variable that gets updated in the component. The second is the setter function that initializes the update and re-render. We are able to confidently use **array destructuring** to handle the objects from ```useState()```. 
 
 > *Here is an example of a simple counter on a webpage, with a button to increment it by one.*
