@@ -22,4 +22,27 @@ Usage:
 
 - Use of 'alt' tag recommended for accessibility.
 
+### Forms
+To prevent forms from refreshing the page when submitted, modify the ```onSubmit``` event listener to point to a custom function. At the **end** of the function, call ```event.preventDefault()``` to prevent reloading.
+
+For example, using React:
+
+```
+function App() {
+    function handleClick(event) {
+        
+        //Handle the click event
+
+        event.preventDefault();
+    }
+
+    return (
+        <form onSubmit={ handleClick }>
+            <input type="text"/>
+            <button type="submit">Submit</button>
+        </form>
+    );
+}
+```
+
 
