@@ -362,6 +362,128 @@ We implement a *State Hook* to keep track of the user input on the form. For the
 
 Input forms keep track of their own internal state. When their input is updated, the form updates its *value* attribute. We essentially override this by telling the input form to execute ```handleChange()``` when there is new input. ```handleChange()``` then updates the value of the state hook, **and** by proxy the internal value attribute of the form itself. 
 
+## Advanced React
+Remember, this note is a simple reference. I cover topics as I learn about them and integrate them into my projects. Not every topic is covered, and the term 'Advanced' is subjective. This section covers deeper topics in React development.
+
+### Class versus Functional Components
+Before we really get into it, I want to mention that thus far, React components have been implemented *functionally*. In the past, before Hooks made their debut as feature, the concept of **State** was primarily usable inside of **Classes**. 
+
+Here is an example of bare Class versus Functional implementation:  
+```Class```
+```
+import React from "react";
+
+class App extends React.Component {
+    render() {
+        return <h1>Hello, World!</h1>;
+    }
+}
+
+export default App;
+```
+```Functional```
+```
+import React from "react";
+
+function App {
+    return <h1>Hello, World!</h1>;
+}
+
+export default App;
+```
+
+Here is a more in-depth example of class implementation, as a basic counter page:
+
+```
+class ClassComponent extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            count: 0
+        };
+        this.increase = this.increase.bind(this);
+    }
+
+    increase() {
+        this.setState(this.state.count + 1);
+    }
+
+    render() {
+        return (
+            <div>
+                <h1>{ this.state.count }</h1>
+                <button onClick={ this.increase }>+</button>
+            </div>
+        );
+    }
+}
+```
+The introduction of Hooks cut down on the necessary boilerplate code, and results in cleaner, more concise flow.
+
+### Complex State
+```useState()``` can store an object with multiple values. It's necessary in certain situations to retrieve previous values of a state, and only update certain parts of that state object.
+```
+...
+function App() {
+    const [fullName, setFullName] = useState({
+        firstName: "",
+        lastName: ""
+    });
+...
+```
+
+One way to manage previous values is to pass a *function* instead of a value to the set method provided by ```useState()```. This first argument passed to this function *is* the previous state value.   
+Adding on the to above example:
+```
+...
+function handleChange(event) {
+    const { newInput, inputSrc } = event.target;
+
+    setFullName(prevInput => {
+        if(inputSrc === "firstName") {
+            return {
+                firstName: newInput,
+                lastName: prevInput.lastName
+            };
+        } else if(inputSrc === "lastName") {
+            return {
+                firstName: prevInput.firstName,
+                lastName: newInput
+            };
+        }
+    });
+}
+...
+```
+
+> ***NOTE:*** *Avoid accessing the event argument inside of a state set method. This can cause issues because this event is synthetic and may cause access errors.*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ### React Developer Tools
