@@ -20,6 +20,7 @@ React works well with dynamic content loading. React loads new frontend content 
     2. [Mapping Data to Components](#mapping-data-to-components)
     3. [State](#state)
     4. [Hooks](#hooks)
+    5. [Forms and Controlled Components](#forms-and-controlled-components)
 
 ## Getting Started
 ### Setting up index.html
@@ -304,6 +305,62 @@ function App() {
 }
 ```
 
+### Forms and Controlled Components
+Similar to how buttons have **MouseEvent** attributes, input forms have an ```onChange``` attribute, and access to other HTML events. This attribute is particularly useful when attempting to retrieve information that a user has entered or modified. 
+
+Here is a simple example of a text input form:
+
+```
+function App() {
+    function handleChange(event) {
+        console.log(event.target.value);
+        console.log(event.target.placeholder);
+        console.log(event.target.type);
+    }
+
+    return (
+        <div>
+            <input 
+                onChange={ handleChange }
+                type="text"
+                placeholder="Enter your name"
+            />
+            <button>Submit</button>
+        </div>
+    );
+}
+```
+
+The ```handleChange()``` function gets passed to the input form on creation. When the ```onChange``` event listener is activated, it calls ```handleChange()``` while passing information on its current state. 
+
+It is **HIGHLY** encouraged to implement HTML form elements as *controlled components*. These are components whose **single source of truth** stems from React, instead of its own internal state based on input. This prevents managing the *value* of the input **and** the *state* of the component as separate values. 
+
+Here is how we can turn the above example into a controlled component:
+```
+function App() {
+    const [name, setName] = useState("");
+
+    function handleChange(event) {
+        setName(event.target.value);
+    }
+
+    return (
+        <div>
+            <input 
+                onChange={ handleChange }
+                type="text"
+                placeholder="Enter your name"
+                value={ name }
+            />
+            <button>Submit</button>
+        </div>
+    );
+}
+```
+
+We implement a *State Hook* to keep track of the user input on the form. For the cherry on top, the *value* of the input is set to the ```name``` state that was created. 
+
+Input forms keep track of their own internal state. When their input is updated, the form updates its *value* attribute. We essentially override this by telling the input form to execute ```handleChange()``` when there is new input. ```handleChange()``` then updates the value of the state hook, **and** by proxy the internal value attribute of the form itself. 
 
 ### React Developer Tools
 A chromium (and Firefox) based extension by the same name that allows a user to view React component heirarchies in the developer tools pane, and utilize a profiling tool.
