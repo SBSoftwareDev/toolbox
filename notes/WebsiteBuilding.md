@@ -1,5 +1,5 @@
-# Website Building Basics
-There are *numerous* ways to build and configure a website, and there isn't a feasible way to cover them all in a concise manner. The goal of this note is to list basic configurations and tools for creating a website. 
+# Website Building Basics (JS)
+There are *numerous* ways to build and configure a website, and there isn't a feasible way to cover them all in a concise manner. The goal of this note is to list basic configurations and tools for creating a website, from a JavaScript perspective. 
 
 One important thing to note, is that there is no *right* way or *best* way to make a website. Most of the time, there are simply *better* ways than others to achieve **your** goals. Are you making a blog website? Sure, you could use plain HTML, CSS, and a sprinkle of JavaScript. There is nothing *wrong* with that, and you do have the ability to make a **good** website with those tools. This is where the term *better* comes in. You could use frameworks, packages, and assets to *expand* functionality, *decrease* work load, and get you to your goal *faster*.
 
