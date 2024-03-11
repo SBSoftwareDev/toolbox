@@ -1,6 +1,6 @@
 # React 
 React is a frontend framework for Javascript. React performs almost like a tree, working with components.
-React works well with dynamic content loading. React loads new frontend content by *comparing changes* in the webpage, almost like tracking with Git.
+React works well with dynamic content loading. React loads new frontend content by *comparing changes* in the webpage, almost like tracking with Git. This note is a **quick-reference** to the *major* features of React.
 
 ### Table of Contents
 1. [Getting Started](#getting-started)  
@@ -361,6 +361,8 @@ function App() {
 We implement a *State Hook* to keep track of the user input on the form. For the cherry on top, the *value* of the input is set to the ```name``` state that was created. 
 
 Input forms keep track of their own internal state. When their input is updated, the form updates its *value* attribute. We essentially override this by telling the input form to execute ```handleChange()``` when there is new input. ```handleChange()``` then updates the value of the state hook, **and** by proxy the internal value attribute of the form itself. 
+
+
 
 ### React Developer Tools
 A chromium (and Firefox) based extension by the same name that allows a user to view React component heirarchies in the developer tools pane, and utilize a profiling tool.
