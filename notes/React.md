@@ -88,8 +88,20 @@ ReactDOM.render(<h1 style={{ color: "red" }}>Hello {name}!</h1>, ...);
 ```
 Doubling up on the curly braces is necessary because the style attribute is looking for a JS object, and for JSX to interpret that object as JS code, it needs the outer braces.
 
+It should also be noted that multi-word style properties are turned into **camel case**. For instance, the CSS style property ```text-decoration``` is expected as ```textDecoration```.
+
+For example: 
+```
+function ToDoItem(props) {
+    return (
+        <li style={{textDecoration: "line-through"}}>
+        </li>
+    );
+}
+```
+
 #### Why use inline styling instead of a CSS stylesheet?
-Inline styling is useful for React elements that should be dynamically updated.
+Inline styling is useful for React elements that should be dynamically updated. CSS stylesheets are pretty much hard coded styles.
 
 ### React Components
 A basic React component can be created through a function that returns JSX parsable html. This component can then be inserted with html element syntax.
@@ -124,7 +136,7 @@ ReactDOM.render(<Heading />, document.getElementById("root"));
 
 ### Props
 Shorthand for properties.  
-Props are the properties of components that can be used like normal JS arguments.  
+Props are the properties of components that can be accessed like a JS object.  
 You can think of React components almost like 'Custom HTML elements'. You are able to add custom attributes to these, unlike classic HTML elements.  
 Here is an example:
 ```
@@ -150,9 +162,57 @@ ReactDOM.render(
             email="janesmith@email.com"
         /> 
     </div>,
-    ...);
+    ...
+);
 ```
 - **NOTE:** HTML native attributes are *not* recognized when passed inside react components (e.g. **className** or **color**)
+
+You can even pass *functions* as properties. If you want to execute a function when that element is clicked, for example, you can pass a click handler to the native event listener.
+
+```
+function App() {
+    function handleClick() {}
+
+    return (
+        <div>
+            <Contact
+                onClick={handleClick} 
+            />
+        </div>
+    );
+}
+```
+
+Be careful using parentheses or passing data inside of the function that gets passed to the component property. Using parentheses will result in immediate evocation of that function. A solution to this is to pass an **anonymous function** to the event listener, which results in that anonymous function being called at the proper time, instead of the actual function at render.
+
+Example solution:  
+```App.jsx```
+```
+...
+function App() {
+    function deleteContact(id) {}
+
+    return (
+        <div>
+            <Contact
+                onDelete={deleteContact}} 
+                name={...}
+            />
+        </div>
+    );
+}
+...
+```
+```Contact.jsx```
+```
+...
+function Contact(props) {
+    return (
+        <li onClick={() => {props.onDelete(props.name)}} >{props.name}</li>
+    );
+}
+...
+```
 
 ## Developing with React
 
@@ -193,7 +253,7 @@ Under the hood, this achieves the same thing. One of the primary differences is 
 Here we can see it in action:
 ```
 function App() {
-  return (
+  return ( 
     <div>
       { isLoggedIn ? (<h1>Hello</h1>) : (<Login />) }
     </div>
@@ -363,7 +423,7 @@ We implement a *State Hook* to keep track of the user input on the form. For the
 Input forms keep track of their own internal state. When their input is updated, the form updates its *value* attribute. We essentially override this by telling the input form to execute ```handleChange()``` when there is new input. ```handleChange()``` then updates the value of the state hook, **and** by proxy the internal value attribute of the form itself. 
 
 ## Advanced React
-Remember, this note is a simple reference. I cover topics as I learn about them and integrate them into my projects. Not every topic is covered, and the term 'Advanced' is subjective. This section covers deeper topics in React development.
+Remember, this note is a simple reference. I cover topics as I experience them and integrate them into my projects. Not every topic is covered, and the term 'Advanced' is subjective. This section covers deeper topics in React development.
 
 ### Class versus Functional Components
 Before we really get into it, I want to mention that thus far, React components have been implemented *functionally*. In the past, before Hooks made their debut as feature, the concept of **State** was primarily usable inside of **Classes**. 
@@ -439,25 +499,54 @@ Adding on the to above example:
 function handleChange(event) {
     const { newInput, inputSrc } = event.target;
 
-    setFullName(prevInput => {
-        if(inputSrc === "firstName") {
-            return {
-                firstName: newInput,
-                lastName: prevInput.lastName
-            };
-        } else if(inputSrc === "lastName") {
-            return {
-                firstName: prevInput.firstName,
-                lastName: newInput
-            };
-        }
-    });
+    //Pass set method a function which returns an object, that has the previous values and the new ones.
+    setFullName(prevInput => ({...prevInput, [inputSrc]: newInput }));
 }
 ...
 ```
 
 > ***NOTE:*** *Avoid accessing the event argument inside of a state set method. This can cause issues because this event is synthetic and may cause access errors.*
 
+### Managing Component Trees
+This section entails communication between components in the React component tree.
+
+One way to have child components affect their parents is to pass a function(s) through the props argument. 
+
+You can achieve this by passing a custom property through your React component with a function handle. In the child component, you can utilize the native listeners by passing that function prop into ```onClick```.
+
+For Example:  
+
+```ToDoItem.jsx```
+```
+...
+function ToDoItem(props) {
+    function handleClick() {}
+
+    return (
+        <li 
+            onClick={props.onChecked}
+        >{props.text}</li>
+    );
+}
+...
+```
+```App.jsx```
+```
+...
+function App () {
+    function deleteItem() {}
+
+    return (
+        <ul>
+            <ToDoItem
+                onChecked={deleteItem}
+            />
+        </ul>
+    );
+}
+...
+```
+The ```deleteItem()``` method is passed to the child ```ToDoItem``` component as a custom property. The child component uses that function as its ```onClick``` listener. 
 
 
 
