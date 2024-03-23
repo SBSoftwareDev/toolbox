@@ -64,7 +64,7 @@ ReactDOM.render(WHAT TO SHOW, WHERE TO SHOW IT)
 ReactDOM.render(<h1>Hello World!</h1>, document.getElementById("root"))
 
 ``` 
-The render function only takes a 'single' html element. This is simple to get around. Wrap the elements to be inserted inside of a div.
+The render function only takes a 'single' html element. This is simple to get around. Wrap the elements to be inserted inside of a div, or a JSX Fragment (which is an empty element tag ```<> </>```).
 
 React uses **JSX** and **Babel** to render native javascript on browsers.  
 **JSX** parses the html inside of javascript files. This can even be nested. JSX can parse javascript inside of html inside of javascript.  
