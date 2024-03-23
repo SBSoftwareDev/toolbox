@@ -22,7 +22,20 @@ React works well with dynamic content loading. React loads new frontend content 
     4. [Hooks](#hooks)
     5. [Forms and Controlled Components](#forms-and-controlled-components)
 
+4. [Advanced React](#advanced-react)
+    1. [Class vs. Functional Components](#class-versus-functional-components)
+    2. [Complex State](#complex-state)
+    3. [Managing Component Trees](#managing-component-trees)
+
+5. [Workflow and Tips](#workflow-and-tips)
+    1. [Project Setup](#project-setup)
+    2. [Styling](#styling)
+    3. [Secrets and Sensitive Data](#secrets-and-sensitive-data)
+    4. [Final Stages](#final-stages)
+    5. [Shortcuts](#shortcuts)
+
 ## Getting Started
+See [Workflow and Tips](#workflow-and-tips) for a guide on setting up a project template.
 ### Setting up index.html
 In ```index.html```, add a div with an id of 'root'. This is the root of the react application, where react stuff goes.
 ```
@@ -426,7 +439,7 @@ Input forms keep track of their own internal state. When their input is updated,
 Remember, this note is a simple reference. I cover topics as I experience them and integrate them into my projects. Not every topic is covered, and the term 'Advanced' is subjective. This section covers deeper topics in React development.
 
 ### Class versus Functional Components
-Before we really get into it, I want to mention that thus far, React components have been implemented *functionally*. In the past, before Hooks made their debut as feature, the concept of **State** was primarily usable inside of **Classes**. 
+Before we really get into it, I want to mention that thus far, React components have been implemented *functionally*. In the past, before Hooks made their debut as a feature, the concept of **State** was primarily usable inside of **Classes**. 
 
 Here is an example of bare Class versus Functional implementation:  
 ```Class```
@@ -548,6 +561,78 @@ function App () {
 ```
 The ```deleteItem()``` method is passed to the child ```ToDoItem``` component as a custom property. The child component uses that function as its ```onClick``` listener. 
 
+## Workflow and Tips
+This section aims to serve as a workflow guideline, in terms of recommended steps and foundations for developing with React. 
+
+### Project Setup
+To start, use a terminal to navigate to the project *parent* directory. Use the node package manager to initialize a new **Vite** project. **Vite** is a frontend development tool. It runs a local development server that is *extremely* quick at replacing changed modules, so the near-instant you make a change, it's loaded into the dev server. **Vite** isn't just for testing; **Vite** has a build command that bundles code into highly-optimized assets for production, reducing end-user load times. 
+
+#### Inside of example directory ```C:\Projects\```
+```
+npm create vite@latest
+(Proceed to follow prompts)
+```
+OR, an alternative shortcut,
+```
+npm create vite@latest example-project -- --template react
+(Double dash is necessary)
+```
+
+After running those commands, **npm** will have created a folder structure with a basic application using React and Vite. 
+
+At this point, install the dependencies that were announced after creating the **Vite** project with npm. Do that by running: 
+```
+npm i
+```
+
+This finishes the creation of the basic template.
+Using the command
+```
+npm run dev
+```
+will start the development server.
+
+### Styling
+There are several ways to style components; One recommend way to implement styling is through modular stylesheets. The imported style(s) are accessed similarly to an object.  
+For instance:  
+```Generic.jsx```
+```
+import React from 'react';
+import styles from './generic.module.css';
+
+...
+
+    return (<h1 className={styles.generic}>Example</h1>)
+```
+```generic.module.css```
+```
+.generic {
+    display: flex;
+    ...
+}
+```
+
+
+### Secrets and Sensitive Data
+It's not a good idea to store **API Keys** and other secrets anywhere inside of the React build. The ideal course of action would see the client send an API request to the backend, where a valid request would be sent information.
+
+### Final Stages
+When you're ready to deploy, use
+```
+npm run build
+```
+to create a ```dist``` folder with the build version of your application.
+
+### Shortcuts
+
+In reference to VS Code extention ```dsznajder.es7-react-js-snippets```
+
+Notable Prefixes:
+|Prefix|Explanation|
+|------|-----------|
+|rfc|Functional Component Template|
+|imr|import React from "react";|
+|imrs|import React, { useState } from "react";|
 
 
 
@@ -565,17 +650,7 @@ The ```deleteItem()``` method is passed to the child ```ToDoItem``` component as
 
 
 
-
-
-
-
-
-
-
-
-
-
-### React Developer Tools
+## React Developer Tools
 A chromium (and Firefox) based extension by the same name that allows a user to view React component heirarchies in the developer tools pane, and utilize a profiling tool.
 
 This extension is a valuable tool when debugging with React.
