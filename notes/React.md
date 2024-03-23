@@ -26,6 +26,7 @@ React works well with dynamic content loading. React loads new frontend content 
     1. [Class vs. Functional Components](#class-versus-functional-components)
     2. [Complex State](#complex-state)
     3. [Managing Component Trees](#managing-component-trees)
+    4. [APIs and External Systems](#apis-and-external-systems)
 
 5. [Workflow and Tips](#workflow-and-tips)
     1. [Project Setup](#project-setup)
@@ -561,6 +562,37 @@ function App () {
 ```
 The ```deleteItem()``` method is passed to the child ```ToDoItem``` component as a custom property. The child component uses that function as its ```onClick``` listener. 
 
+### APIs and External Systems
+Keeping your React page updated with outside information is typically done with the Hook ```useEffect```. The purpose of this Hook is to keep a component synchronized with an external system. Use cases for this Hook include chat services, external API calls, connecting to the browser DOM, and other such things **not controlled by React**.
+
+```useEffect``` takes a function and optional dependency variables.
+
+Passing *zero* dependency variables to ```useEffect``` causes the function to be right after component render. Alternatively, if present, the function will be called when the dependency values change.
+
+Here is an example of a component loading data from an external API immediately after it gets rendered:
+```
+const [data, setData] = useState(null);
+
+useEffect(() => {
+    async function fetchData() {
+        try {
+            const res = await fetch(API_URL);
+            const result = await res.json();
+            setData(result);
+        } catch(e) {
+            /* Handle errors */
+        }
+
+        return () => {
+            /* Handle Cleanup */
+        };
+    }
+
+    fetchData();
+}, []);
+```
+It's recommended to implement ```useEffect``` inside of a custom Hook, especially if you plan to fetch API data in multiple locations in your code. As in, instead of using the ```useEffect``` Hook everytime you access an external system, write a custom hook to gather data from any passed URL argument.
+
 ## Workflow and Tips
 This section aims to serve as a workflow guideline, in terms of recommended steps and foundations for developing with React. 
 
@@ -611,7 +643,6 @@ import styles from './generic.module.css';
     ...
 }
 ```
-
 
 ### Secrets and Sensitive Data
 It's not a good idea to store **API Keys** and other secrets anywhere inside of the React build. The ideal course of action would see the client send an API request to the backend, where a valid request would be sent information.
